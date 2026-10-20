@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-// generated from demo2.txt
 int g(int x);
 
 int main(void)
