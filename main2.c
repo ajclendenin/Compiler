@@ -2,7 +2,7 @@
 
 int g(int x);
 
-int main(void)
+int main()
 {
     int x = g(2);
     int y = g(0);
