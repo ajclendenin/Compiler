@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-// generated from demo1.txt
 int f(int a, int b, int c);
 
 int main(void)
