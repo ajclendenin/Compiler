@@ -23,11 +23,8 @@ output2: demo2.o main2.o
 %.o: %.s
 	$(CC) $(CFLAGS) -c $<
 
-demo1.s: generator demo1.txt
-	./$< demo1.txt
-
-demo2.s: generator demo2.txt
-	./$< demo2.txt
+%.s: generator %.txt
+	./$^
 
 generator: generator.o stack.o
 	$(CC) $(LDFLAGS) -o $@ $^
