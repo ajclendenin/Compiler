@@ -30,14 +30,11 @@ int main(int argc, char *argv[]) {
     fprintf(output, "    .text\n");
 
     char line[256];
-    int lineno = 0;
     const char *error = NULL;
     while (error == NULL && fgets(line, sizeof(line), input) != NULL) {
-        lineno++;
-
         char *colon = strchr(line, ':');
         if (colon != NULL) *colon = '\0';
-        char *name = strtok(line, " \t\r\n");
+        char *name = strtok(line, " \n");
         if (name == NULL && colon == NULL) continue;    
         if (name != NULL && name[0] == '#') continue;   
         if (name == NULL || colon == NULL) {
@@ -52,7 +49,7 @@ int main(int argc, char *argv[]) {
         char *params[128]; 
         int nparams = 0;
         clear();
-        for (char *tok = strtok(colon + 1, " \t\r\n"); tok != NULL; tok = strtok(NULL, " \t\r\n")) {
+        for (char *tok = strtok(colon + 1, " \n"); tok != NULL; tok = strtok(NULL, " \n")) {
             if (strlen(tok) == 1 && strchr("+-*/", tok[0]) != NULL) {
                 if (is_empty()) { error = "not enough values"; break; }
                 pop();
@@ -65,7 +62,7 @@ int main(int argc, char *argv[]) {
                 } else if (tok[0] == '-') {
                     fprintf(output, "    subl  %%ecx, %%eax\n");
                 } else if (tok[0] == '*') {
-                    fprintf(output, "    imull %%ecx, %%eax\n");
+                    fprintf(output, "    mull %%ecx\n");
                 } else {
                     fprintf(output, "    cltd\n");          
                     fprintf(output, "    idivl %%ecx\n");
@@ -105,7 +102,7 @@ int main(int argc, char *argv[]) {
     fclose(output);
 
     if (error != NULL) {
-        fprintf(stderr, "%s:%d: %s\n", argv[1], lineno, error);
+        fprintf(stderr, "%s: %s\n", argv[1], error);
         remove(outpath);
         return 1;
     }
