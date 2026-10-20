@@ -1,1 +1,15 @@
 f : a b + c *
+
+add : a b +
+sub : a b -
+mul : a b *
+quot : a b /
+
+rsub : b a -
+
+answer : 42
+sum : 3 4 +
+scale : x 100 * 1 +
+
+tight:a b *
+spaced   :   a    b    +
